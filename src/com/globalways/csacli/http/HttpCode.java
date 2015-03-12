@@ -5,8 +5,8 @@ package com.globalways.csacli.http;
  *
  */
 public class HttpCode {
-	/** ³É¹¦ **/
+	/** æˆåŠŸ **/
 	public static final int SUCCESS = 1;
-	/** Ê§°Ü **/
+	/** å¤±è´¥ **/
 	public static final int FAIL = 0;
 }

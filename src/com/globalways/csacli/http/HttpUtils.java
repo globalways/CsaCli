@@ -26,7 +26,7 @@ public class HttpUtils implements HttpClientDao {
 	// 超时时间10秒
 	private static AsyncHttpClient mHttpUtil = new AsyncHttpClient(10 * 1000);
 	/** 最大任务数 **/
-	private int mConfigRequestThreadPoolSize = 3;
+	private final int mConfigRequestThreadPoolSize = 5;
 
 	private HttpUtils() {
 	}
@@ -69,7 +69,7 @@ public class HttpUtils implements HttpClientDao {
 					}
 					return;
 				}
-				MyLog.d(TAG, "onSuccess = " + response);
+				MyLog.d(TAG, "GetRequest onSuccess = " + response);
 				if (null != httpClientUtilCallBack) {
 					httpClientUtilCallBack.onSuccess(url, flag, response);
 				}
@@ -77,7 +77,7 @@ public class HttpUtils implements HttpClientDao {
 
 			@Override
 			public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
-				MyLog.d(TAG, "onFailure = " + arg1 + "|" + arg3.getMessage());
+				MyLog.d(TAG, "GetRequest onFailure = " + arg1 + "|" + arg3.getMessage());
 				if (null != httpClientUtilCallBack) {
 					httpClientUtilCallBack.onFailure(url, flag, ErrorCode.EXCEPTION);
 				}
@@ -115,7 +115,7 @@ public class HttpUtils implements HttpClientDao {
 					}
 					return;
 				}
-				MyLog.d(TAG, "onSuccess_arg0.result = " + response);
+				MyLog.d(TAG, "PostRequest onSuccess: " + response);
 				if (null != httpClientUtilCallBack) {
 					httpClientUtilCallBack.onSuccess(url, flag, response);
 				}
@@ -123,7 +123,7 @@ public class HttpUtils implements HttpClientDao {
 
 			@Override
 			public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
-				MyLog.d(TAG, "onFailure = " + arg1 + "|" + arg3.getMessage());
+				MyLog.d(TAG, "PostRequest onFailure: " + arg1 + "|" + arg3.getMessage());
 				if (null != httpClientUtilCallBack) {
 					httpClientUtilCallBack.onFailure(url, flag, ErrorCode.EXCEPTION);
 				}
@@ -155,9 +155,10 @@ public class HttpUtils implements HttpClientDao {
 				}
 				return;
 			}
+			MyLog.d(TAG, "uploadFile fileLocalPath: " + fileLocalPath.toString() + " , fileServerPath: "
+					+ fileServerPath);
 			mHttpUtil.setMaxConnections(mConfigRequestThreadPoolSize);
 			mHttpUtil.setTimeout(100 * 1000);
-			MyLog.d(TAG, "uploadFile | fileServerPath = " + fileServerPath);
 			mHttpUtil.post(fileServerPath, rp, new AsyncHttpResponseHandler() {
 
 				@Override
@@ -172,7 +173,7 @@ public class HttpUtils implements HttpClientDao {
 						}
 						return;
 					}
-					MyLog.d(TAG, "onSuccess_arg0.result = " + response);
+					MyLog.d(TAG, "uploadFile onSuccess :" + response);
 					if (null != httpClientUtilCallBack) {
 						httpClientUtilCallBack.onSuccess(fileServerPath, flag, response);
 					}
@@ -189,7 +190,7 @@ public class HttpUtils implements HttpClientDao {
 
 				@Override
 				public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
-					MyLog.d(TAG, "onFailure = " + arg1 + "|" + arg3.getMessage());
+					MyLog.d(TAG, "uploadFile onFailure : " + arg1 + "|" + arg3.getMessage());
 					arg3.printStackTrace();
 					if (null != httpClientUtilCallBack) {
 						httpClientUtilCallBack.onFailure(fileServerPath, flag, ErrorCode.EXCEPTION);
@@ -197,6 +198,7 @@ public class HttpUtils implements HttpClientDao {
 				}
 			});
 		} else {
+			MyLog.d(TAG, "uploadFile onFailure file not exist.");
 			if (null != httpClientUtilCallBack) {
 				httpClientUtilCallBack.onFailure(fileServerPath, flag, ErrorCode.FILE_NOT_EXIST);
 			}
@@ -221,11 +223,14 @@ public class HttpUtils implements HttpClientDao {
 				directory.mkdirs();
 				directory.setWritable(true);
 			}
+			MyLog.d(TAG, "downloadFile localFilePath: " + localFilePath + " , fileServerPath: " + fileServerPath);
 			mHttpUtil.setTimeout(10 * 1000);
 			mHttpUtil.get(fileServerPath, new AsyncHttpResponseHandler() {
 
 				@Override
 				public void onSuccess(int arg0, Header[] arg1, byte[] arg2) {
+					MyLog.d(TAG, "downloadFile onSuccess  localFilePath: " + localFilePath + " , fileServerPath: "
+							+ fileServerPath);
 					Tool.saveBytes2SDcardFile(arg2, localFilePath, false);
 					if (null != httpClientUtilCallBack) {
 						httpClientUtilCallBack.onSuccess(fileServerPath, flag, null);
@@ -243,7 +248,7 @@ public class HttpUtils implements HttpClientDao {
 
 				@Override
 				public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
-					MyLog.d(TAG, "onFailure = " + arg1 + "|" + arg3.getMessage());
+					MyLog.d(TAG, "downloadFile onFailure = " + arg1 + "|" + arg3.getMessage());
 					if (null != httpClientUtilCallBack) {
 						httpClientUtilCallBack.onFailure(fileServerPath, flag, ErrorCode.EXCEPTION);
 					}
