@@ -16,6 +16,7 @@ import com.globalways.csacli.entity.HongIdEntity;
 public class HongIdListAdapter extends BaseAdapter {
 
 	private List<HongIdEntity> list = null;
+	private HongIdEntity chooseHongId;
 	private Context context;
 
 	public HongIdListAdapter(Context context) {
@@ -26,9 +27,15 @@ public class HongIdListAdapter extends BaseAdapter {
 	public void setData(boolean isRefresh, List<HongIdEntity> list) {
 		if (isRefresh) {
 			this.list = list;
+			chooseHongId = list.get(0);
 		} else {
 			this.list.addAll(list);
 		}
+		notifyDataSetChanged();
+	}
+
+	public void setChooseItem(int position) {
+		chooseHongId = list.get(position);
 		notifyDataSetChanged();
 	}
 
@@ -72,10 +79,15 @@ public class HongIdListAdapter extends BaseAdapter {
 		} else {
 			mItemView = (ItemView) convertView.getTag();
 		}
-		mItemView.textHongId.setText(list.get(position).getHong_id() + "");
-		mItemView.textNick.setText(list.get(position).getNick_name());
-		mItemView.textEmail.setText(list.get(position).getEmail());
-		mItemView.textTel.setText(list.get(position).getTel());
+		if (chooseHongId.getHong_id() == list.get(position).getHong_id()) {
+			mItemView.textHongId.setTextColor(context.getResources().getColor(R.color.base_black_333333));
+		} else {
+			mItemView.textHongId.setTextColor(context.getResources().getColor(R.color.base_black_999999));
+		}
+		mItemView.textHongId.setText("HongId: " + list.get(position).getHong_id());
+		mItemView.textNick.setText("Nick: " + list.get(position).getNick_name());
+		mItemView.textEmail.setText("Email: " + list.get(position).getEmail());
+		mItemView.textTel.setText("Tel: " + list.get(position).getTel());
 		return convertView;
 	}
 

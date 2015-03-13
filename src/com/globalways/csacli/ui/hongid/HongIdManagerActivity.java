@@ -55,6 +55,7 @@ public class HongIdManagerActivity extends BaseFragmentActivity implements OnCli
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		MyLog.d(TAG, "HongIdList click position: " + position);
 		hongIdDetailFragment.setEntity(hongIdAdapter.getItemByPosition(position - 1));
+		hongIdAdapter.setChooseItem(position - 1);
 	}
 
 	/** PullToRefreshListView的下拉或上拉监听接口 */
@@ -72,6 +73,10 @@ public class HongIdManagerActivity extends BaseFragmentActivity implements OnCli
 				super.onSuccess(returnContent);
 				MyLog.d(TAG, "loadHongIdList success.");
 				hongIdAdapter.setData(isRefresh, returnContent);
+				refreshListView.onRefreshComplete();
+
+				hongIdDetailFragment.setEntity(hongIdAdapter.getItemByPosition(0));
+				hongIdAdapter.setChooseItem(0);
 			}
 
 			@Override
@@ -79,6 +84,7 @@ public class HongIdManagerActivity extends BaseFragmentActivity implements OnCli
 				super.onFailure(code, msg);
 				MyLog.d(TAG, "loadHongIdList error code: " + code + ", msg: " + msg);
 				Toast.makeText(HongIdManagerActivity.this, msg, Toast.LENGTH_SHORT).show();
+				refreshListView.onRefreshComplete();
 			}
 		});
 	}
@@ -102,6 +108,9 @@ public class HongIdManagerActivity extends BaseFragmentActivity implements OnCli
 		listView.setAdapter(hongIdAdapter);
 		listView.setOnItemClickListener(this);
 		hongIdDetailFragment = new HongIdDetailFragment();
+
+		getSupportFragmentManager().beginTransaction().add(R.id.rightContainer, hongIdDetailFragment)
+				.show(hongIdDetailFragment).commit();
 	}
 
 	@Override
