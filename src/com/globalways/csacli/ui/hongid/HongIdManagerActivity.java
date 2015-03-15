@@ -109,7 +109,7 @@ public class HongIdManagerActivity extends BaseFragmentActivity implements OnCli
 		listView.setOnItemClickListener(this);
 		hongIdDetailFragment = new HongIdDetailFragment();
 
-		getSupportFragmentManager().beginTransaction().add(R.id.rightContainer, hongIdDetailFragment)
+		getSupportFragmentManager().beginTransaction().add(R.id.layoutContainer, hongIdDetailFragment)
 				.show(hongIdDetailFragment).commit();
 	}
 

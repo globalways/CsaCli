@@ -3,6 +3,7 @@ package com.globalways.csacli.ui.main;
 import com.globalways.csacli.R;
 import com.globalways.csacli.ui.BaseActivity;
 import com.globalways.csacli.ui.hongid.HongIdActivity;
+import com.globalways.csacli.ui.store.StoreActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,7 +13,7 @@ import android.widget.Button;
 
 public class MainActivity extends BaseActivity implements OnClickListener {
 
-	private Button btnHongIdManager, btnNewStore;
+	private Button btnHongIdManager, btnStore;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +28,8 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 		case R.id.btnHongIdManager:
 			startActivity(new Intent(this, HongIdActivity.class));
 			break;
-		case R.id.btnNewStore:
+		case R.id.btnStore:
+			startActivity(new Intent(this, StoreActivity.class));
 			break;
 		}
 	}
@@ -35,8 +37,8 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 	private void initView() {
 		btnHongIdManager = (Button) findViewById(R.id.btnHongIdManager);
 		btnHongIdManager.setOnClickListener(this);
-		btnNewStore = (Button) findViewById(R.id.btnNewStore);
-		btnNewStore.setOnClickListener(this);
+		btnStore = (Button) findViewById(R.id.btnStore);
+		btnStore.setOnClickListener(this);
 	}
 
 }

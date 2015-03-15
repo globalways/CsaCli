@@ -40,6 +40,7 @@ public class SimpleProgressDialog extends Dialog implements DialogInterface.OnCa
 	 * 
 	 * @param context
 	 */
+	@SuppressWarnings("static-access")
 	public SimpleProgressDialog(Context context) {
 		super(context, R.style.CustomProgressDialog);
 		mContext = new SoftReference<Context>(context);

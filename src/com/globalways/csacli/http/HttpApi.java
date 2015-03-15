@@ -11,4 +11,9 @@ public class HttpApi {
 	public static final String HONG_ID_GET_ALL = HOME_URI + VERSION + "/admins/members/all";
 
 	public static final String HONG_ID_GENERATE = HOME_URI + VERSION + "/admins/members/generate";
+
+	public static final String STORE_NEW_STORE = HOME_URI + "/v2/merchants/stores";
+	public static final String STORE_LIST = HOME_URI + "/v2/merchants/stores";
+
+	public static final String INDUSTRY_LIST = HOME_URI + "/v2/joint/industries/all";
 }

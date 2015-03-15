@@ -24,7 +24,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingRight="20dp"
+                    android:layout_marginRight="20dp"
                     android:text="最小ID" />
 
                 <EditText
@@ -45,7 +45,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingRight="20dp"
+                    android:layout_marginRight="20dp"
                     android:text="最大ID" />
 
                 <EditText
@@ -66,7 +66,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingRight="20dp"
+                    android:layout_marginRight="20dp"
                     android:text="数量" />
 
                 <EditText
@@ -87,7 +87,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingRight="20dp"
+                    android:layout_marginRight="20dp"
                     android:text="类型" />
 
                 <Spinner

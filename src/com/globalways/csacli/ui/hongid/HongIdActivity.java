@@ -43,6 +43,11 @@ public class HongIdActivity extends BaseFragmentActivity implements OnClickListe
 			HongIdActivity.this.finish();
 			break;
 		case R.id.btnExpand:
+			if (hongIdExpandFragment == null) {
+				hongIdExpandFragment = new HongIdExpandFragment();
+				getSupportFragmentManager().beginTransaction().add(R.id.layoutContainer, hongIdExpandFragment)
+						.show(hongIdExpandFragment).commit();
+			}
 			layoutContainer.setVisibility(View.VISIBLE);
 			break;
 		case R.id.btnDetail:
@@ -81,9 +86,6 @@ public class HongIdActivity extends BaseFragmentActivity implements OnClickListe
 		layoutContainer = findViewById(R.id.layoutContainer);
 		layoutContainer.setVisibility(View.GONE);
 
-		hongIdExpandFragment = new HongIdExpandFragment();
-		getSupportFragmentManager().beginTransaction().add(R.id.layoutContainer, hongIdExpandFragment)
-				.show(hongIdExpandFragment).commit();
 	}
 
 }

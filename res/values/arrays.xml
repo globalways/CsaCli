@@ -5,5 +5,10 @@
         <item>个人会员</item>
         <item>机构会员</item>
     </string-array>
+    <string-array name="storeType">
+        <item>个体户</item>
+        <item>连锁店</item>
+        <item>免税店</item>
+    </string-array>
 
 </resources>

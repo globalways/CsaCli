@@ -121,7 +121,7 @@ public class HongIdManager {
 		// params.put("fields", fields);
 		// params.put("search", search);
 		params.put("size", PAGE_SIZE);
-		params.put("page", page);
+		params.put("page", isRefresh ? 1 : page);
 		HttpUtils.getInstance().sendGetRequest(HttpApi.HONG_ID_GET_BY_PAGE, 1, params,
 				new HttpClientUtilCallBack<String>() {
 					@Override

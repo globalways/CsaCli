@@ -22,8 +22,9 @@
     <application
         android:name=".tools.MyApplication"
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@drawable/logo"
         android:label="@string/app_name"
+        android:logo="@drawable/logo"
         android:theme="@android:style/Theme.NoTitleBar" >
         <activity
             android:name=".ui.main.MainActivity"
@@ -34,6 +35,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!-- 帐号 -->
+        <activity
+            android:name=".ui.account.LoginActivity"
+            android:screenOrientation="landscape" >
+        </activity>
+        <!-- HongId管理 -->
         <activity
             android:name=".ui.hongid.HongIdActivity"
             android:screenOrientation="landscape" >
@@ -42,8 +49,9 @@
             android:name=".ui.hongid.HongIdManagerActivity"
             android:screenOrientation="landscape" >
         </activity>
+        <!-- 店铺管理 -->
         <activity
-            android:name=".ui.account.LoginActivity"
+            android:name=".ui.store.StoreActivity"
             android:screenOrientation="landscape" >
         </activity>
     </application>
