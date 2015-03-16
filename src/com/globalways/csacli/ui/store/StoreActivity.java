@@ -156,8 +156,9 @@ public class StoreActivity extends BaseFragmentActivity implements OnClickListen
 				} else {
 					hideAddStoreView();
 				}
+				return true;
 			}
-			return true;
+			return false;
 		}
 		return super.onKeyDown(keyCode, event);
 	}

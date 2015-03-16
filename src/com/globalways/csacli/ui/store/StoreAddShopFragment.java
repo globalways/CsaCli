@@ -130,7 +130,6 @@ public class StoreAddShopFragment extends BaseFragment implements OnClickListene
 					public void onSuccess(String returnContent) {
 						progressDialog.cancleDialog();
 						super.onSuccess(returnContent);
-						super.onSuccess(returnContent);
 						AlertDialog.Builder builder = new Builder(getActivity());
 						builder.setMessage("新建成功！");
 						builder.setTitle("提示！");
