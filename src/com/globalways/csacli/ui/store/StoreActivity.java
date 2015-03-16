@@ -64,9 +64,9 @@ public class StoreActivity extends BaseFragmentActivity implements OnClickListen
 			break;
 		}
 	}
-	
-	private void showAddStoreView(){
-		if(storeAddShopFragment==null){
+
+	private void showAddStoreView() {
+		if (storeAddShopFragment == null) {
 			storeAddShopFragment = new StoreAddShopFragment();
 			getSupportFragmentManager().beginTransaction().add(R.id.dialogContainer, storeAddShopFragment)
 					.show(storeAddShopFragment).commit();
@@ -101,10 +101,8 @@ public class StoreActivity extends BaseFragmentActivity implements OnClickListen
 				super.onSuccess(returnContent);
 				MyLog.d(TAG, "loadStoreList success.");
 				storeListAdapter.setData(isRefresh, returnContent);
-				refreshListView.onRefreshComplete();
-
 				storeDetailFragment.setEntity(storeListAdapter.getItemByPosition(0));
-				storeListAdapter.setChooseItem(0);
+				refreshListView.onRefreshComplete();
 			}
 
 			@Override
