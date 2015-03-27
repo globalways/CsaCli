@@ -137,7 +137,7 @@ public class StoreManager {
 		if (pid != 0) {
 			params.put("pid", pid);
 		}
-		params.put("store_password", store_password);
+		params.put("password", store_password);
 		params.put("store_name", store_name);
 		params.put("store_sub", store_sub);
 		if (store_desc != null && !store_desc.isEmpty()) {
