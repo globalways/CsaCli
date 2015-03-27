@@ -28,6 +28,7 @@ import com.globalways.csacli.http.manager.ManagerCallBack;
 import com.globalways.csacli.http.manager.StoreManager;
 import com.globalways.csacli.http.manager.StoreManager.StoreStatus;
 import com.globalways.csacli.http.manager.StoreManager.StoreType;
+import com.globalways.csacli.tools.MD5;
 import com.globalways.csacli.ui.BaseFragment;
 import com.globalways.csacli.view.SimpleProgressDialog;
 
@@ -35,7 +36,7 @@ public class StoreAddShopFragment extends BaseFragment implements OnClickListene
 
 	private View layoutView;
 	private EditText editPID, editStoreName, editStoreSubName, editAddress, editProductHotLimit, editDesc,
-			editStoreEmail, editStorePhone;
+			editStoreEmail, editStorePhone,editStorePassword;
 	private Spinner spinnerStoreType, spinnerIndustry;
 	private StoreIndustryAdapter industryAdapter;
 	private CheckBox checkBoxLock;
@@ -116,6 +117,14 @@ public class StoreAddShopFragment extends BaseFragment implements OnClickListene
 		}
 		String store_email = editStoreEmail.getText().toString().trim();
 		String store_phone = editStorePhone.getText().toString().trim();
+		String store_password = editStorePassword.getText().toString().trim();
+		if(store_password.isEmpty())
+		{
+			Toast.makeText(getActivity(), "请输入管理密码", Toast.LENGTH_SHORT).show();
+			return;
+		}
+		store_password = new MD5().getMD5(store_password);
+		
 		if (store_phone.isEmpty()) {
 			Toast.makeText(getActivity(), "请输入店铺联系方式", Toast.LENGTH_SHORT).show();
 			return;
@@ -123,7 +132,7 @@ public class StoreAddShopFragment extends BaseFragment implements OnClickListene
 		int product_hot_limit = Integer.valueOf(editProductHotLimit.getText().toString().trim());
 
 		progressDialog.showDialog();
-		StoreManager.getInstance().addStore(pid, store_name, store_sub, store_desc, industry_name, store_address, null,
+		StoreManager.getInstance().addStore(pid, store_name, store_sub, store_desc, industry_name, store_password,store_address, null,
 				store_phone, store_email, product_hot_limit, 0, 0, 2, 0, 2, null, storeStatus, storeType,
 				new ManagerCallBack<String>() {
 					@Override
@@ -213,6 +222,8 @@ public class StoreAddShopFragment extends BaseFragment implements OnClickListene
 		editDesc = (EditText) layoutView.findViewById(R.id.editDesc);
 		editStoreEmail = (EditText) layoutView.findViewById(R.id.editStoreEmail);
 		editStorePhone = (EditText) layoutView.findViewById(R.id.editStorePhone);
+		
+		editStorePassword = (EditText) layoutView.findViewById(R.id.editStorePassword);
 
 		spinnerStoreType = (Spinner) layoutView.findViewById(R.id.spinnerStoreType);
 		spinnerStoreType.setOnItemSelectedListener(new OnItemSelectedListener() {

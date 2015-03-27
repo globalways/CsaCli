@@ -100,6 +100,8 @@ public class StoreManager {
 	 *            行业分类名称；必填
 	 * @param store_address
 	 *            商铺地址；必填
+	 * @param store_password
+	 *            商铺管理密码：必填
 	 * @param store_avatar
 	 *            商铺图片地址，多张图片用英文逗号分割；选填
 	 * @param store_phone
@@ -126,7 +128,7 @@ public class StoreManager {
 	 *            店铺类型；必填
 	 * @param callBack
 	 */
-	public void addStore(int pid, String store_name, String store_sub, String store_desc, String industry_name,
+	public void addStore(int pid, String store_name, String store_sub, String store_desc, String industry_name,String store_password,
 			String store_address, String store_avatar, String store_phone,String store_email, int product_hot_limit,
 			int delivery_distance, int delivery_price, int delivery_flag, int canvass_price,
 			int canvass_flag, String store_news, StoreStatus status, StoreType store_type,
@@ -135,6 +137,7 @@ public class StoreManager {
 		if (pid != 0) {
 			params.put("pid", pid);
 		}
+		params.put("store_password", store_password);
 		params.put("store_name", store_name);
 		params.put("store_sub", store_sub);
 		if (store_desc != null && !store_desc.isEmpty()) {
