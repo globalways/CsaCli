@@ -1,0 +1,116 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>饼图</title>
+    <!--Step:1 Import a module loader, such as esl.js or require.js-->
+    <!--Step:1 引入一个模块加载器，如esl.js或者require.js-->
+    <script src="js/esl.js"></script>
+</head>
+
+<body>
+    <!--Step:2 Prepare a dom for ECharts which (must) has size (width & hight)-->
+    <!--Step:2 为ECharts准备一个具备大小（宽高）的Dom-->
+    <div id="main" style="height:600px;border:0px solid #ccc;padding:10px;"></div>
+    
+    <script type="text/javascript">
+    // Step:3 conifg ECharts's path, link to echarts.js from current page.
+    // Step:3 为模块加载器配置echarts的路径，从当前页面链接到echarts.js，定义所需图表路径
+    require.config({
+        paths:{ 
+            echarts:'./js/echarts',
+            'echarts/chart/pie' : './js/echarts',
+            'echarts/chart/bar' : './js/echarts',
+            'echarts/chart/line': './js/echarts',
+            'echarts/chart/map' : './js/echarts'
+        }
+    });
+    // Step:4 require echarts and use it in the callback.
+    // Step:4 动态加载echarts然后在回调函数中开始使用，注意保持按需加载结构定义图表路径
+    var myChart;
+    
+    
+    //刷新数据部分
+    function refreshView(flowIndex)
+    {
+    	option = {
+    		    title : {
+    		        text: 'hongid状态图',
+    		        subtext: '点击区块显示比例',
+    		        x:'center'
+    		    },
+    		    animation : false,
+    		    tooltip : {
+    		        trigger: 'item',
+    		        formatter: "{a} <br/>{b} : {c} ({d}%)"
+    		    },
+    		    legend: {
+    		        orient : 'vertical',
+    		        x : 'left',
+    		        data:['初始','备用','正常','异常','删除']
+    		    },
+    		    toolbox: {
+    		        show : false,
+    		        feature : {
+    		            mark : {show: true},
+    		            dataView : {show: true, readOnly: false},
+    		            magicType : {
+    		                show: true, 
+    		                type: ['pie', 'funnel'],
+    		                option: {
+    		                    funnel: {
+    		                        x: '25%',
+    		                        width: '50%',
+    		                        funnelAlign: 'left',
+    		                        max: 1548
+    		                    }
+    		                }
+    		            },
+    		            restore : {show: true},
+    		            saveAsImage : {show: true}
+    		        }
+    		    },
+    		    calculable : true,
+    		    series : [
+    		        {
+    		            name:'访问来源',
+    		            type:'pie',
+    		            radius : '55%',
+    		            center: ['50%', '60%'],
+    		            data:[
+    		                {value:335, name:'初始'},
+    		                {value:310, name:'备用'},
+    		                {value:234, name:'正常'},
+    		                {value:135, name:'异常'},
+    		                {value:1548, name:'删除'}
+    		            ]
+    		        }
+    		    ]
+    		};
+    		                    
+    		                    
+    	
+    	require(
+    	        [
+    	            'echarts',
+    	            'echarts/chart/pie'
+    	        ],
+    	        function(ec) {
+    	            //--- 折柱 ---
+    	            myChart = ec.init(document.getElementById('main'));
+    	            myChart.setOption(option);
+    	            var ecConfig = require('echarts/config');
+    	            myChart.on(ecConfig.EVENT.CLICK, function(param){
+    	    	        //刷新动态图标 --获取dataIndex,调用java对外开放接口
+    	    	        //调用刷新库表部分
+    	    	        window.SurveyUtil.clickOnAndroid();
+    	    	       // alert(param.dataIndex);
+    	        	});
+    	        }
+    	    );  
+    };
+
+refreshView(7);
+    </script>
+</body>
+</html>

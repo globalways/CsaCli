@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -85,6 +86,149 @@ public class StoreManager {
 		}
 	}
 
+	/**
+	 * 更新商铺
+	 * 
+	 * @param id
+	 * 			  商铺ID；必填
+	 * @param pid
+	 *            父商铺ID；选填，默认值0
+	 * @param store_name
+	 *            商铺名称；必填
+	 * @param store_sub
+	 *            商铺副标题；必填
+	 * @param store_desc
+	 *            商铺描述；选填
+	 * @param industry_name
+	 *            行业分类名称；必填
+	 * @param store_address
+	 *            商铺地址；必填
+	 * @param store_password
+	 *            商铺管理密码：必填
+	 * @param store_avatar
+	 *            商铺图片地址，多张图片用英文逗号分割；选填
+	 * @param store_phone
+	 *            商铺联系方式；选填
+	 * @param store_email
+	 *            商铺联系方式；选填
+	 * @param product_hot_limit
+	 *            商品标记为hot的阀值；选填
+	 * @param delivery_distance
+	 *            送货的最远距离，单位：m；选填
+	 * @param delivery_price
+	 *            送货的价格，单位：分；选填
+	 * @param delivery_flag
+	 *            送货标识，1可送货，2不送货；选填，默认2
+	 * @param canvass_price
+	 *            揽货价格，单位：分；选填
+	 * @param canvass_flag
+	 *            揽货标识，1可揽货，2不可以；选填，默认2
+	 * @param store_news
+	 *            商铺当前公告；选填
+	 * @param status
+	 *            店铺状态；必填
+	 * @param store_type
+	 *            店铺类型；必填
+	 * @param callBack
+	 */
+	public void updateStore(long id, String store_name, String store_sub, String store_desc, String industry_name,
+			String store_address, String store_avatar, String store_phone,String store_email, int product_hot_limit,
+			int delivery_distance, int delivery_price, int delivery_flag, int canvass_price,
+			int canvass_flag, String store_news, StoreStatus status, StoreType store_type,
+			final ManagerCallBack<String> callBack) {
+		Map<String, Object> params = new HashMap<String, Object>();
+//		if (pid != 0) {
+//			params.put("pid", pid);
+//		}
+//		params.put("password", store_password);
+		params.put("store_name", store_name);
+		params.put("store_sub", store_sub);
+		if (store_desc != null && !store_desc.isEmpty()) {
+			params.put("store_desc", store_desc);
+		}
+		params.put("industry_name", industry_name);
+		params.put("store_address", store_address);
+		if (store_avatar != null && !store_avatar.isEmpty()) {
+			params.put("store_avatar", store_avatar);
+		}
+		if (store_phone != null && !store_phone.isEmpty()) {
+			params.put("store_phone", store_phone);
+		}
+		if (store_email != null && !store_email.isEmpty()) {
+			params.put("store_email", store_email);
+		}
+		if (product_hot_limit != 0) {
+			params.put("product_hot_limit", product_hot_limit);
+		}
+		if (delivery_distance != 0) {
+			params.put("delivery_distance", delivery_distance);
+		}
+		if (delivery_price != 0) {
+			params.put("delivery_price", delivery_price);
+		}
+		params.put("delivery_flag", delivery_flag);
+		if (delivery_price != 0) {
+			params.put("delivery_price", delivery_price);
+		}
+		params.put("canvass_flag", canvass_flag);
+		if (store_news != null && !store_news.isEmpty()) {
+			params.put("store_news", store_news);
+		}
+		if (status != null) {
+			params.put("status", status.getType());
+		}
+		if (store_type != null) {
+			params.put("store_type", store_type.getType());
+		}
+		
+		// remove unsupported fields 
+		StringBuilder apiurl = new StringBuilder( HttpApi.STORE_UPDATE.replaceFirst(":sid", String.valueOf(id)));
+		apiurl.append("?fields=");
+		Set<String> fieldsSet = params.keySet();
+		fieldsSet.remove("password");
+		fieldsSet.remove("pid");
+		for(String field : fieldsSet)
+		{
+			apiurl.append(field);
+			apiurl.append(",");
+		}
+		
+		HttpUtils.getInstance().sendPutRequest(apiurl.toString(), 1, params,
+				new HttpClientUtilCallBack<String>() {
+					@Override
+					public void onSuccess(String url, long flag, String returnContent) {
+						super.onSuccess(url, flag, returnContent);
+						JSONObject jsonObject;
+						try {
+							jsonObject = new JSONObject(returnContent);
+							int code = jsonObject.getJSONObject(Config.STATUS).getInt(Config.CODE);
+							if (code == HttpCode.SUCCESS) {
+								if (null != callBack) {
+									callBack.onSuccess(null);
+								}
+							} else {
+								if (null != callBack) {
+									callBack.onFailure(code,
+											jsonObject.getJSONObject(Config.STATUS).getString(Config.MSG));
+								}
+							}
+						} catch (JSONException e) {
+							e.printStackTrace();
+						}
+					}
+
+					@Override
+					public void onFailure(String url, long flag, ErrorCode errorCode) {
+						super.onFailure(url, flag, errorCode);
+						if (null != callBack) {
+							callBack.onFailure(errorCode.code(), errorCode.msg());
+						}
+					}
+				});
+	}
+	
+	
+	
 	/**
 	 * 新建商铺，或为连锁店添加加盟店
 	 * 
@@ -210,6 +354,8 @@ public class StoreManager {
 					}
 				});
 	}
+	
+	
 
 	private static final int PAGE_SIZE = 20;
 	private int page = 1;

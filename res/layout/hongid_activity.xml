@@ -11,24 +11,38 @@
 
         <include layout="@layout/title" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:gravity="center"
             android:orientation="vertical" >
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@null"
-                android:src="@drawable/member_pie" />
+            <WebView
+                android:id="@+id/webView_hongidrate"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
                 android:orientation="horizontal" >
 
+                <Button
+                    android:id="@+id/btnToBar"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="转到条形图" />
+                <Button
+                    android:id="@+id/btnToPie"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:visibility="gone"
+                    android:text="转到扇形图" />
+                
                 <Button
                     android:id="@+id/btnExpand"
                     android:layout_width="0dp"
@@ -43,7 +57,7 @@
                     android:layout_weight="1"
                     android:text="查看" />
             </LinearLayout>
-        </LinearLayout>
+        </RelativeLayout>
     </LinearLayout>
 
     <RelativeLayout

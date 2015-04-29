@@ -84,7 +84,7 @@ public class StoreListAdapter extends BaseAdapter {
 		} else {
 			mItemView.textStoreId.setTextColor(context.getResources().getColor(R.color.base_black_999999));
 		}
-		mItemView.textStoreId.setText("StoreId: " + list.get(position).getId());
+		mItemView.textStoreId.setText("StoreId: " + list.get(position).getStore_id());
 		mItemView.textStoreName.setText("StoreName: " + list.get(position).getStore_name());
 		return convertView;
 	}

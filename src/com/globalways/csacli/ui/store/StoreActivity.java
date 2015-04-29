@@ -3,11 +3,17 @@ package com.globalways.csacli.ui.store;
 import java.util.List;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnKeyListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,6 +47,11 @@ public class StoreActivity extends BaseFragmentActivity implements OnClickListen
 	private StoreDetailFragment storeDetailFragment;
 	private StoreAddShopFragment storeAddShopFragment;
 	private View dialogContainer;
+	
+	//search widget
+	private EditText mEtSearch = null;// 输入搜索内容
+	private Button mBtnClearSearchText = null;// 清空搜索信息的按钮
+	private LinearLayout mLayoutClearSearchText = null;
 
 	@Override
 	protected void onCreate(Bundle arg0) {
@@ -144,6 +155,64 @@ public class StoreActivity extends BaseFragmentActivity implements OnClickListen
 
 		getSupportFragmentManager().beginTransaction().add(R.id.layoutContainer, storeDetailFragment)
 				.show(storeDetailFragment).commit();
+		
+		
+		
+		
+		// search 
+		
+		mEtSearch = (EditText) findViewById(R.id.et_search);
+		mBtnClearSearchText = (Button) findViewById(R.id.btn_clear_search_text);
+		mLayoutClearSearchText = (LinearLayout) findViewById(R.id.layout_clear_search_text);
+		mEtSearch.addTextChangedListener(new TextWatcher() {
+
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before,
+					int count) {
+
+			}
+
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+			}
+
+			@Override
+			public void afterTextChanged(Editable s) {
+				int textLength = mEtSearch.getText().length();
+				if (textLength > 0) {
+					mLayoutClearSearchText.setVisibility(View.VISIBLE);
+				} else {
+					mLayoutClearSearchText.setVisibility(View.GONE);
+				}
+			}
+		});
+
+		mBtnClearSearchText.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				mEtSearch.setText("");
+				mLayoutClearSearchText.setVisibility(View.GONE);
+			}
+		});
+		mEtSearch.setOnKeyListener(new OnKeyListener() {
+
+			@Override
+			public boolean onKey(View arg0, int keyCode, KeyEvent event) {
+				if (keyCode == KeyEvent.KEYCODE_ENTER) {
+					Toast.makeText(StoreActivity.this,
+							mEtSearch.getText().toString().trim(),
+							Toast.LENGTH_LONG).show();
+				}
+				return false;
+			}
+		});
+		
+		
+		
+		
+		
+		
 	}
 
 	@Override

@@ -14,6 +14,8 @@ public class HttpApi {
 
 	public static final String STORE_NEW_STORE = HOME_URI + "/v2/merchants/stores";
 	public static final String STORE_LIST = HOME_URI + "/v2/merchants/stores";
-
+	public static final String STORE_UPDATE = HOME_URI + "/v2/merchants/stores/:sid";
+	public static final String STORE_DETAIL = HOME_URI + "/v2/merchants/stores/:sid";
+	
 	public static final String INDUSTRY_LIST = HOME_URI + "/v2/joint/industries/all";
 }

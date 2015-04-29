@@ -109,7 +109,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="20dp"
-                        android:text="店铺副标题" />
+                        android:text="所属社区" />
 
                     <EditText
                         android:id="@+id/editStoreSubName"

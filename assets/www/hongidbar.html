@@ -1,0 +1,113 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>柱状图</title>
+    <style>
+	html,body { height:100%; width:100%; margin:0; padding:0;align:left;valign:left;}
+	div{width:100%; margin:0; padding:0;align:left;valign:left;}
+	</style>
+    <!--Step:1 Import a module loader, such as esl.js or require.js-->
+    <!--Step:1 引入一个模块加载器，如esl.js或者require.js-->
+    <script src="js/esl.js"></script>
+</head>
+
+<body>
+    <!--Step:2 Prepare a dom for ECharts which (must) has size (width & hight)-->
+    <!--Step:2 为ECharts准备一个具备大小（宽高）的Dom-->
+    <div id="main" style="height:300px;border:0px solid #ccc;padding:10px;"></div>
+    
+    <script type="text/javascript">
+    // Step:3 conifg ECharts's path, link to echarts.js from current page.
+    // Step:3 为模块加载器配置echarts的路径，从当前页面链接到echarts.js，定义所需图表路径
+    require.config({
+        paths:{ 
+            echarts:'./js/echarts',
+            'echarts/chart/bar' : './js/echarts',
+        }
+    });
+    
+    // Step:4 require echarts and use it in the callback.
+    // Step:4 动态加载echarts然后在回调函数中开始使用，注意保持按需加载结构定义图表路径
+    var myChart;
+    
+    //对外开放数据接口，用于刷新图表
+    function refershView(monthArray,flowAmountArray,flowUseAmountArray)
+    {
+    	var option = {
+    		    tooltip : {
+    		        trigger: 'axis',
+    		        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+    		            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+    		        }
+    		    },
+    		    legend: {
+    		        data:['普通用户','机构用户']
+    		    },
+    		    animation : false,
+    		    toolbox: {
+    		        show : false,
+    		        orient: 'vertical',
+    		        x: 'right',
+    		        y: 'center',
+    		        feature : {
+    		            mark : {show: true},
+    		            dataView : {show: true, readOnly: false},
+    		            magicType : {show: true, type: ['line', 'bar', 'stack', 'tiled']},
+    		            restore : {show: true},
+    		            saveAsImage : {show: true}
+    		        }
+    		    },
+    		    calculable : true,
+    		    xAxis : [
+    		        {
+    		            type : 'category',
+    		            data : ['初始','备用','正常','异常','删除']
+    		        }
+    		    ],
+    		    yAxis : [
+    		        {
+    		            type : 'value'
+    		        }
+    		    ],
+    		    series : [
+    		        {
+    		            name:'普通用户',
+    		            type:'bar',
+    		            data:[320, 332, 301, 334, 390]
+    		        },
+    		        {
+    		            name:'机构用户',
+    		            type:'bar',
+    		            data:[862, 1018, 964, 1026, 1679],
+    		            markLine : {
+    		                itemStyle:{
+    		                    normal:{
+    		                        lineStyle:{
+    		                            type: 'dashed'
+    		                        }
+    		                    }
+    		                },
+    		                data : [
+    		                    [{type : 'min'}, {type : 'max'}]
+    		                ]
+    		            }
+    		        }
+    		    ]
+    		};
+    		                    
+    	require(
+    	        [
+    	            'echarts',
+    	            'echarts/chart/bar',
+    	        ],
+    	        function(ec) {
+    	            //--- 折柱 ---
+    	            myChart = ec.init(document.getElementById('main'));
+    	            myChart.setOption(option,true);
+    	        }
+    	    );
+    }
+    </script>
+</body>
+</html>

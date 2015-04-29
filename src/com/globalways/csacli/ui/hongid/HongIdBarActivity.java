@@ -2,11 +2,8 @@ package com.globalways.csacli.ui.hongid;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.opengl.Visibility;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.webkit.CookieManager;
@@ -27,10 +24,10 @@ import com.globalways.csacli.ui.BaseFragmentActivity;
  * @author James
  *
  */
-public class HongIdActivity extends BaseFragmentActivity implements OnClickListener {
+public class HongIdBarActivity extends BaseFragmentActivity implements OnClickListener {
 
 	private TextView textLeft, textCenter;
-	private Button btnExpand, btnDetail ,btnToBar,btnToPie;
+	private Button btnExpand, btnDetail;
 	private View layoutContainer;
     private WebView mWebView;
 	
@@ -52,7 +49,7 @@ public class HongIdActivity extends BaseFragmentActivity implements OnClickListe
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.textleft:
-			HongIdActivity.this.finish();
+			HongIdBarActivity.this.finish();
 			break;
 		case R.id.btnExpand:
 			if (hongIdExpandFragment == null) {
@@ -64,16 +61,6 @@ public class HongIdActivity extends BaseFragmentActivity implements OnClickListe
 			break;
 		case R.id.btnDetail:
 			startActivity(new Intent(this, HongIdManagerActivity.class));
-			break;
-		case R.id.btnToBar:
-			setupWebView("file:///android_asset/www/hongidbar.html",2);
-			btnToBar.setVisibility(View.GONE);
-			btnToPie.setVisibility(View.VISIBLE);
-			break;
-		case R.id.btnToPie:
-			setupWebView("file:///android_asset/www/survey_result.html",1);
-			btnToBar.setVisibility(View.VISIBLE);
-			btnToPie.setVisibility(View.GONE);
 			break;
 		}
 	}
@@ -92,41 +79,8 @@ public class HongIdActivity extends BaseFragmentActivity implements OnClickListe
 	/** 初始化UI、设置监听 */
 	private void initView() {
 		
-		setupWebView("file:///android_asset/www/survey_result.html",1);
-		
-		
-		textLeft = (TextView) findViewById(R.id.textleft);
-		textLeft.setText("返回");
-		textLeft.setVisibility(View.VISIBLE);
-		textLeft.setOnClickListener(this);
-
-		textCenter = (TextView) findViewById(R.id.textCenter);
-		textCenter.setText("Hongid使用情况");
-		textCenter.setVisibility(View.VISIBLE);
-
-		btnExpand = (Button) findViewById(R.id.btnExpand);
-		btnExpand.setOnClickListener(this);
-		btnDetail = (Button) findViewById(R.id.btnDetail);
-		btnDetail.setOnClickListener(this);
-		
-		btnToBar = (Button) findViewById(R.id.btnToBar);
-		btnToBar.setOnClickListener(this);
-		btnToPie = (Button) findViewById(R.id.btnToPie);
-		btnToPie.setOnClickListener(this);
-		
-
-		layoutContainer = findViewById(R.id.layoutContainer);
-		layoutContainer.setVisibility(View.GONE);
-
-	}
-	
-	public void getCheckDetail(final int flowIndex)
-	{
-		Toast.makeText(this, "您选择的是饼图块坐标"+flowIndex,Toast.LENGTH_SHORT).show();
-	}
-	private void setupWebView(String url,final int type)
-	{
 		mWebView  = (WebView)findViewById(R.id.webView_hongidrate);
+		
 		mWebView.getSettings().setJavaScriptEnabled(true);
 		//设置可以访问文件
 		mWebView.getSettings().setAllowFileAccess(true);
@@ -145,7 +99,7 @@ public class HongIdActivity extends BaseFragmentActivity implements OnClickListe
 
                   //  public void run() { 
 
-                        Toast.makeText(HongIdActivity.this, "测试调用java", Toast.LENGTH_LONG).show();
+                        Toast.makeText(HongIdBarActivity.this, "测试调用java", Toast.LENGTH_LONG).show();
 
                    // } 
 
@@ -159,52 +113,45 @@ public class HongIdActivity extends BaseFragmentActivity implements OnClickListe
 		
 		mWebView.setWebChromeClient(new WebChromeClient());
 		//设置背景为透明
-		//mWebView.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+		mWebView.setBackgroundColor(getResources().getColor(android.R.color.transparent));
 		//加载wap页面
-		mWebView.loadUrl(url);
+		mWebView.loadUrl("file:///android_asset/www/hongidbar.html");
 		
 		mWebView.setWebViewClient(new WebViewClient(){
-			
-			@Override
-			public void onPageStarted(WebView view, String url, Bitmap favicon) {
-				super.onPageStarted(view, url, favicon);
-				//Toast.makeText(HongIdActivity.this, "start load", Toast.LENGTH_SHORT).show();
-			}
 
 			@Override
 			public void onPageFinished(WebView view, String url) {
 				// TODO Auto-generated method stub
 				super.onPageFinished(view, url);
-				switch (type) {
-				case 1:
-					//pie
-					mWebView.loadUrl("javascript:refreshView("+7+");");
-					break;
-				case 2:
-					//bar
-					mWebView.loadUrl("javascript:refershView(['一月','二月','三月','四月'],[200,800,400,500],[100,900,20,300]);");
-					break;
-				default:
-					break;
-				}
+				mWebView.loadUrl("javascript:refershView(['一月','二月','三月','四月'],[200,800,400,500],[100,900,20,300]);");
 			}
 			
 		});
+		
+		
+		
+		textLeft = (TextView) findViewById(R.id.textleft);
+		textLeft.setText("返回");
+		textLeft.setVisibility(View.VISIBLE);
+		textLeft.setOnClickListener(this);
+
+		textCenter = (TextView) findViewById(R.id.textCenter);
+		textCenter.setText("Hongid使用情况");
+		textCenter.setVisibility(View.VISIBLE);
+
+		btnExpand = (Button) findViewById(R.id.btnExpand);
+		btnExpand.setOnClickListener(this);
+		btnDetail = (Button) findViewById(R.id.btnDetail);
+		btnDetail.setOnClickListener(this);
+
+		layoutContainer = findViewById(R.id.layoutContainer);
+		layoutContainer.setVisibility(View.GONE);
+
 	}
 	
-	@Override
-	protected void onStop() {
-		
-		super.onStop();
-		//mWebView.loadUrl("about:blank");
-		
+	public void getCheckDetail(final int flowIndex)
+	{
+		Toast.makeText(this, "您选择的是饼图块坐标"+flowIndex,Toast.LENGTH_SHORT).show();
 	} 
-	@Override
-	protected void onPause() {
-		// TODO Auto-generated method stub
-		super.onPause();
-		mWebView.clearCache(true);
-		//mWebView.loadUrl("about:blank");
-	}
 
 }

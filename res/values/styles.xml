@@ -50,5 +50,7 @@
         <item name="android:inputType">text</item>
         <item name="android:singleLine">true</item>
     </style>
-
+	<style name="MainButtonStyle">
+	    <item name="android:background">@color/selector_main_btn_bg</item>
+	</style>
 </resources>

@@ -33,6 +33,21 @@ public class IndustryEntity {
 				+ ", created=" + created + ", updated=" + updated + "]";
 	}
 
+	
+	
+	/**
+	 * compare Industry name
+	 * @param another
+	 * @author yangping.wang
+	 * @return boolean
+	 */
+	public boolean compareName(String anotherName)
+	{
+		boolean result = false;
+		result = anotherName.equals(this.getIndustry_name()) ? true : false;
+		return result;
+	}
+	
 	public int getId() {
 		return id;
 	}

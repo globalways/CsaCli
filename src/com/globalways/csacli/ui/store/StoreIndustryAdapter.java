@@ -27,7 +27,7 @@ public class StoreIndustryAdapter extends BaseAdapter {
 		this.list = list;
 		notifyDataSetChanged();
 	}
-
+	
 	@Override
 	public int getCount() {
 		if (null != list) {

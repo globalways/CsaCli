@@ -1,5 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="app_name">管理端</string>
-
+    
+    
+    <!-- MainActivity function list -->
+    <string name="function_list_hongid_manager">hongid管理</string>
+    <string name="function_list_store_manager">商铺管理</string>
+    
 </resources>

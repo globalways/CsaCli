@@ -1,30 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/base_white" >
+    android:background="@color/base_white"
+    android:orientation="vertical" >
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@null"
+        android:scaleType="centerCrop"
+        android:src="@drawable/banner" />
 
     <TableLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true" >
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
 
         <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" >
 
             <Button
-                android:id="@+id/btnHongIdManager"
-                android:layout_width="200dp"
-                android:layout_height="80dp"
-                android:text="hongId管理" />
+                android:id="@+id/btnPieMap"
+                style="@style/MainButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:drawableTop="@drawable/icon_product"
+                android:text="hongid管理" />
+
+            <Button
+                android:id="@+id/btnBarMap"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="条形图测试" />
 
             <Button
                 android:id="@+id/btnStore"
-                android:layout_width="200dp"
-                android:layout_height="80dp"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:text="商铺管理" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" >
+            
+            
+            <Button
+                android:id="@+id/btnHongidManager"
+                style="@style/MainButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:drawableTop="@drawable/icon_product"
+                android:text="Hongid管理" />
+
+            <Button
+                android:id="@+id/btnStore21"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/app_name" />
+
+            <Button
+                android:id="@+id/btnStore22"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/app_name" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" >
+            
+            <Button
+                android:id="@+id/btnHongIdManager3"
+                style="@style/MainButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:drawableTop="@drawable/icon_product"
+                android:text="@string/app_name" />
+
+            <Button
+                android:id="@+id/btnStore3"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/app_name" />
+
+            <Button
+                android:id="@+id/btnStore4"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/app_name" />
         </TableRow>
     </TableLayout>
 
-</RelativeLayout>
+</LinearLayout>
