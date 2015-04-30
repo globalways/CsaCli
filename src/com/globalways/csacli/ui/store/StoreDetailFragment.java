@@ -31,6 +31,7 @@ import com.globalways.csacli.http.manager.StoreManager.StoreStatus;
 import com.globalways.csacli.http.manager.StoreManager.StoreType;
 import com.globalways.csacli.tools.MD5;
 import com.globalways.csacli.ui.BaseFragment;
+import com.globalways.csacli.ui.statistics.StoreStatisticsActivity;
 
 public class StoreDetailFragment extends BaseFragment implements OnClickListener {
 

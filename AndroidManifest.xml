@@ -63,7 +63,7 @@
             android:screenOrientation="landscape" >
         </activity>
         <activity
-            android:name=".ui.store.StoreStatisticsActivity"
+            android:name="com.globalways.csacli.ui.statistics.StoreStatisticsActivity"
             android:screenOrientation="landscape" >
         </activity>
     </application>

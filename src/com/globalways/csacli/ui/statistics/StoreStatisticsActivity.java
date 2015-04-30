@@ -1,8 +1,10 @@
-package com.globalways.csacli.ui.store;
+package com.globalways.csacli.ui.statistics;
 
+import android.app.Fragment;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.webkit.CookieManager;
@@ -29,6 +31,10 @@ public class StoreStatisticsActivity extends BaseFragmentActivity implements
 	private WebView mWebView;
 	private Button btnTurnover, btnSales, btnHuantuRevenue;
 	
+	private StatisticsFragment statisticFragment;
+	
+	
+	
 	
 	
 	@Override
@@ -39,6 +45,31 @@ public class StoreStatisticsActivity extends BaseFragmentActivity implements
 		initView();
 	}
 	
+	public enum StatType{
+		
+		/**
+		 * 营业额
+		 */
+		TURNOVER(1),
+		/**
+		 * 销售量
+		 */
+		SALES(2),
+		/**
+		 * 环途收入
+		 */
+		HUANTUREVENUE(3);
+		private int type;
+		private StatType(int type)
+		{
+			this.type = type;
+		}
+		@Override
+		public String toString() {
+			return String.valueOf(this.type);
+		}
+	}
+	
 	
 	@Override
 	public void onClick(View v) {
@@ -47,7 +78,7 @@ public class StoreStatisticsActivity extends BaseFragmentActivity implements
 			this.finish();
 			break;
 		case R.id.btnTurnover:
-			resetWebView(BAR, "['一月','二月','三月','四月'],[200,800,400,500],[100,900,20,300]");
+			//resetWebView(BAR, "['一月','二月','三月','四月'],[200,800,400,500],[100,900,20,300]");
 			break;
 		default:
 			break;
@@ -59,7 +90,6 @@ public class StoreStatisticsActivity extends BaseFragmentActivity implements
 	@Override
 	protected void onPause() {
 		super.onPause();
-		mWebView.clearCache(true);
 	}
 	private void initView()
 	{
@@ -86,8 +116,12 @@ public class StoreStatisticsActivity extends BaseFragmentActivity implements
 		btnHuantuRevenue = (Button) findViewById(R.id.btnHuantuRevenue);
 		btnHuantuRevenue.setOnClickListener(this);
 		
-		//webview
-		initWebView("file:///android_asset/www/store_statistics_bar.html",2);
+		
+		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+		statisticFragment = new StatisticsFragment();
+		ft.add(R.id.viewContainer, statisticFragment).show(statisticFragment);
+		ft.commit();
+		
 		
 	}
 	
@@ -153,82 +187,4 @@ public class StoreStatisticsActivity extends BaseFragmentActivity implements
 		
 	}
 	
-	
-	private void initWebView(String url,final int type)
-	{
-		mWebView = (WebView)findViewById(R.id.wv_statistics);
-		mWebView.getSettings().setJavaScriptEnabled(true);
-		//设置可以访问文件
-		mWebView.getSettings().setAllowFileAccess(true);
-		//设置可使用cookie
-		CookieManager.getInstance().setAcceptCookie(true);
-		//去a input标签边框
-		mWebView.getSettings().setNeedInitialFocus(false);
-		//加载js访问控件
-		//Handler mHandler = new Handler();
-		
-		
-		
-//		mWebView.addJavascriptInterface(new Object(){
-//			
-//			@JavascriptInterface
-//			public void clickOnAndroid() { 
-//				Handler mHandler = new Handler();
-//                mHandler.post(new Runnable() { 
-//
-//                    public void run() { 
-//
-//                        Toast.makeText(StoreStatisticsActivity.this, "测试调用java", Toast.LENGTH_LONG).show();
-//
-//                    } 
-//
-//                }); 
-//
-//            } 
-//			
-//		}, "Fun");
-		
-		
-		
-		//设置捕捉js事件
-		//mWebView.setWebChromeClient(new WebChromeClientSelf(this));
-		
-		mWebView.setWebChromeClient(new WebChromeClient());
-		//设置背景为透明
-		//mWebView.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-		//加载wap页面
-//		mWebView.loadUrl(url);
-		
-		
-//		mWebView.setWebViewClient(new WebViewClient(){
-//			
-//			@Override
-//			public void onPageStarted(WebView view, String url, Bitmap favicon) {
-//				super.onPageStarted(view, url, favicon);
-//				//Toast.makeText(HongIdActivity.this, "start load", Toast.LENGTH_SHORT).show();
-//			}
-//
-//			@Override
-//			public void onPageFinished(WebView view, String url) {
-//				// TODO Auto-generated method stub
-//				super.onPageFinished(view, url);
-//				switch (type) {
-//				case 1:
-//					//pie
-//					mWebView.loadUrl("javascript:refreshView("+7+");");
-//					break;
-//				case 2:
-//					//bar
-//					mWebView.loadUrl("javascript:refershView(['一月','二月','三月','四月'],[200,800,400,500],[100,900,20,300]);");
-//					break;
-//				default:
-//					break;
-//				}
-//			}
-//			
-//		});
-		
-		resetWebView(BAR, "['一月','二月','三月','四月'],[200,800,400,500],[100,900,20,300]");
-	}
-
 }
